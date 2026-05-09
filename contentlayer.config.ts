@@ -8,6 +8,22 @@ import rehypePrettyCode, { type Options as PrettyCodeOptions } from "rehype-pret
 
 type TocItem = { level: number; text: string; slug: string };
 
+export const Thought = defineDocumentType(() => ({
+  name: "Thought",
+  filePathPattern: "thoughts/**/*.mdx",
+  contentType: "mdx",
+  fields: {
+    date: { type: "date", required: true },
+    draft: { type: "boolean", default: false },
+  },
+  computedFields: {
+    slug: {
+      type: "string",
+      resolve: (doc) => doc._raw.flattenedPath.replace(/^thoughts\//, ""),
+    },
+  },
+}));
+
 export const Post = defineDocumentType(() => ({
   name: "Post",
   filePathPattern: "posts/**/*.mdx",
@@ -59,7 +75,7 @@ const prettyCodeOptions: PrettyCodeOptions = {
 
 export default makeSource({
   contentDirPath: "content",
-  documentTypes: [Post],
+  documentTypes: [Post, Thought],
   mdx: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [

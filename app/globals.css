@@ -176,4 +176,17 @@
     content: "";
     @apply h-px w-8 bg-muted/60;
   }
+
+  /* 首页全屏滚动：每屏一句 */
+  .thought-screen {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
+  /* MDX 段落在 thought-body 内不要带默认 margin（影响居中） */
+  .thought-body :is(p, h1, h2, h3) {
+    margin: 0;
+  }
+  .thought-body em {
+    @apply text-accent not-italic;
+  }
 }
