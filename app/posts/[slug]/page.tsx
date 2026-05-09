@@ -6,6 +6,7 @@ import { formatDate } from "@/lib/utils";
 import { MDXContent } from "@/components/post/mdx-content";
 import { Toc } from "@/components/post/toc";
 import { Comments } from "@/components/post/comments";
+import { ReadingProgress } from "@/components/post/reading-progress";
 
 export function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }));
@@ -19,7 +20,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) return {};
-  const ogImage = `/api/og?title=${encodeURIComponent(post.title)}`;
+  const ogImage = `/api/og?title=${encodeURIComponent(post.title)}&subtitle=${encodeURIComponent(post.summary)}&tags=${encodeURIComponent(post.tags.join(","))}`;
   return {
     title: post.title,
     description: post.summary,
@@ -54,6 +55,7 @@ export default async function PostPage({
 
   return (
     <div className="container py-16 md:py-24">
+      <ReadingProgress />
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_200px]">
         <article className="min-w-0">
           <header className="mb-12">

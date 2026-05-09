@@ -3,6 +3,8 @@ import { allPosts, type Post } from "contentlayer/generated";
 export type { Post };
 export type TocItem = { level: number; text: string; slug: string };
 
+export const POSTS_PER_PAGE = 10;
+
 export function getAllPosts(): Post[] {
   return allPosts
     .filter((p) => !p.draft)
@@ -25,6 +27,22 @@ export function getAllTags(): { tag: string; count: number }[] {
 
 export function getPostsByTag(tag: string): Post[] {
   return getAllPosts().filter((p) => p.tags.includes(tag));
+}
+
+export function getPaginatedPosts(page: number): {
+  items: Post[];
+  totalPages: number;
+  page: number;
+} {
+  const all = getAllPosts();
+  const totalPages = Math.max(1, Math.ceil(all.length / POSTS_PER_PAGE));
+  const safePage = Math.min(Math.max(Math.floor(page), 1), totalPages);
+  const start = (safePage - 1) * POSTS_PER_PAGE;
+  return {
+    items: all.slice(start, start + POSTS_PER_PAGE),
+    totalPages,
+    page: safePage,
+  };
 }
 
 export function getAdjacentPosts(slug: string): {

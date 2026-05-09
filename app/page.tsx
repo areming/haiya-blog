@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Rss } from "lucide-react";
 import { siteConfig } from "@/lib/site";
 import { getAllPosts, getAllTags } from "@/lib/posts";
 import { PostCard } from "@/components/post/post-card";
@@ -34,6 +34,18 @@ export default function HomePage() {
             ))}
           </div>
         )}
+
+        <div className="mt-10 flex items-center gap-4 text-[13px] text-muted">
+          <a
+            href="/rss.xml"
+            className="group inline-flex items-center gap-1.5 transition hover:text-accent"
+          >
+            <Rss className="h-3.5 w-3.5" />
+            RSS 订阅
+          </a>
+          <span className="h-3 w-px bg-border/80" aria-hidden />
+          <span>不打扰，更新时主动推送到你的阅读器</span>
+        </div>
       </section>
 
       <section>
