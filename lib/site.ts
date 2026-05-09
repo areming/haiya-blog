@@ -17,10 +17,10 @@ export const siteConfig = {
     { href: "/about", label: "关于" },
   ],
   giscus: {
-    repo: "your-name/your-repo",
-    repoId: "PLACEHOLDER_REPO_ID",
+    repo: "areming/haiya-blog",
+    repoId: "R_kgDOSYeSOw",
     category: "Announcements",
-    categoryId: "PLACEHOLDER_CATEGORY_ID",
+    categoryId: "DIC_kwDOSYeSO84C8pEV",
     mapping: "pathname",
     reactionsEnabled: "1",
     emitMetadata: "0",
