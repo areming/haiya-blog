@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: 30 14% 99%;
+    --bg-elevated: 30 14% 97%;
+    --fg: 24 10% 10%;
+    --muted: 24 6% 45%;
+    --muted-bg: 30 8% 92%;
+    --accent: 25 90% 38%;
+    --border: 30 8% 90%;
+    --selection: 25 90% 88%;
+  }
+
+  .dark {
+    --bg: 24 10% 7%;
+    --bg-elevated: 24 8% 11%;
+    --fg: 36 18% 94%;
+    --muted: 30 6% 65%;
+    --muted-bg: 24 8% 16%;
+    --accent: 38 95% 60%;
+    --border: 24 6% 18%;
+    --selection: 38 95% 30%;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  body {
+    @apply bg-bg text-fg antialiased;
+    font-family: var(--font-sans), ui-sans-serif, "PingFang SC", "Microsoft YaHei",
+      "Source Han Sans CN", "Noto Sans CJK SC", system-ui, sans-serif;
+    font-size: 16.5px;
+    line-height: 1.7;
+  }
+
+  ::selection {
+    background-color: hsl(var(--selection));
+  }
+
+  /* 优雅的滚动条 */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 5px;
+    border: 2px solid hsl(var(--bg));
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted));
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .font-display {
+    font-family: var(--font-serif), ui-serif, "Songti SC", "Source Han Serif CN",
+      "Noto Serif CJK SC", Georgia, serif;
+    font-feature-settings: "ss01", "ss02";
+  }
+}
+
+@layer components {
+  /* MDX prose 调整 */
+  .prose {
+    @apply text-fg/90;
+  }
+  .prose h2,
+  .prose h3 {
+    @apply font-display tracking-tight;
+    scroll-margin-top: 5rem;
+  }
+  .prose h2 {
+    @apply mt-12 text-2xl font-semibold;
+  }
+  .prose h3 {
+    @apply mt-8 text-xl font-semibold;
+  }
+  .prose p {
+    @apply leading-[1.85];
+  }
+  .prose blockquote {
+    @apply border-l-2 border-accent/60 pl-5 italic text-fg/75 not-italic;
+    border-left-color: hsl(var(--accent) / 0.6);
+  }
+  .prose a {
+    @apply text-accent decoration-accent/40 underline-offset-[3px] decoration-1 transition hover:decoration-accent;
+  }
+  .prose pre {
+    @apply rounded-xl border border-border bg-[hsl(var(--bg-elevated))] p-4 overflow-x-auto text-[13.5px] leading-relaxed;
+  }
+  .prose pre code {
+    @apply font-mono;
+  }
+  .prose code {
+    font-variant-ligatures: none;
+  }
+  .prose :not(pre) > code {
+    @apply rounded bg-[hsl(var(--muted-bg))] px-1.5 py-0.5 text-[0.875em] font-medium text-fg/90;
+  }
+  .prose :not(pre) > code::before,
+  .prose :not(pre) > code::after {
+    content: "";
+  }
+  .prose hr {
+    @apply my-12 border-border;
+  }
+  .prose table {
+    @apply border-collapse;
+  }
+  .prose th,
+  .prose td {
+    @apply border-b border-border px-3 py-2;
+  }
+  .prose ul li::marker {
+    color: hsl(var(--accent));
+  }
+
+  /* Shiki 双主题：light 默认，dark 时切换 */
+  .shiki,
+  .shiki span {
+    color: var(--shiki-light);
+  }
+  html.dark .shiki,
+  html.dark .shiki span {
+    color: var(--shiki-dark);
+  }
+
+  /* 标题锚点链接 */
+  .heading-anchor {
+    @apply ml-2 no-underline transition;
+    color: hsl(var(--muted) / 0);
+  }
+  .heading-anchor::before {
+    content: "#";
+  }
+  h2:hover > .heading-anchor,
+  h3:hover > .heading-anchor {
+    color: hsl(var(--muted) / 0.6);
+  }
+
+  /* 卡片悬浮的左侧色条 */
+  .post-card {
+    @apply relative pl-0 transition-[padding,background] duration-300;
+  }
+  .post-card::before {
+    content: "";
+    @apply absolute left-0 top-1/2 h-0 w-[2px] -translate-y-1/2 bg-accent transition-all duration-300;
+  }
+  .post-card:hover {
+    @apply pl-4;
+  }
+  .post-card:hover::before {
+    @apply h-[60%];
+  }
+
+  /* 装饰性的 hero 副标题 */
+  .hero-eyebrow {
+    @apply inline-flex items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-muted;
+  }
+  .hero-eyebrow::before {
+    content: "";
+    @apply h-px w-8 bg-muted/60;
+  }
+}

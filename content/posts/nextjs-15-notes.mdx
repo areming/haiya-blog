@@ -1,0 +1,38 @@
+---
+title: Next.js 15 上手记的几条小经验
+date: 2026-05-07
+summary: 从 14 升到 15，几个值得注意的变化和我踩过的小坑。
+tags: [Next.js, 笔记]
+---
+
+## App Router 的异步 params
+
+Next 15 把 `params` 和 `searchParams` 改成 `Promise`：
+
+```tsx
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  return <div>{slug}</div>;
+}
+```
+
+**注意**：动态路由全要改，不然类型对不上。
+
+## React 19 与 next-themes
+
+`next-themes` 0.4 之后已经兼容 React 19，无需 patch。但仍然要在客户端组件里处理 hydration mismatch（用 `mounted` 标志位延迟渲染图标）。
+
+## typedRoutes 实验性开关
+
+```js
+// next.config.mjs
+export default {
+  experimental: { typedRoutes: true },
+};
+```
+
+打开后，`<Link href="/posts/[slug]">` 在编译期就会校验路径，重构时改路由名很爽。
