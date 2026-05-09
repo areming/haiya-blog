@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Haiya Blog",
   title: "Haiya Blog",
   description: "一个关于代码、思考与生活的个人博客。",
-  url: "https://haiya-blog.example.com",
+  url: "https://haiya-blog.vercel.app",
   locale: "zh-CN",
   author: {
     name: "Haiya",
